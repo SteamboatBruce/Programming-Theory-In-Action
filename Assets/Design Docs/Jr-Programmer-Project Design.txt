@@ -2,17 +2,55 @@
 
 
 --------------------------
--- 1. abstraction       -- 
+-- 1. inheritance       -- 
 --------------------------
 
---------------------------
--- 2. encapsulation     --
---------------------------
+Bicycles!  road bikes, gravel bikes, town bikes, mountain bikes (with and without front and/or rear suspension).
+
+BUT, would also like to be able to model tricycles and other variations.
+
+SO, the base class will be "Cycle" (and this class will abstract).
+
+For example:
+Cycle
+-- bicycle
+---- road bicycle (skinny tires, etc.)
+---- mountain bicycle (fat tires, can travel on different terrain)
+-- tricycle (three tires, can go at velocity = 0, or even backwards!)
+-- unicycle (requires advanced skill level, forwards or backwards)
+
 
 --------------------------
--- 3. inheritance       --
+-- 2. polymorphism      --
 --------------------------
 
+All Cycles can move, but
+* some can just go forwards.
+* Others can go backwards.
+* Some can stay still (-ish, for the unicycle).
+* Some can stay still with no effort (tricycle).
+* Some must be dismounted when stopped.
+
 --------------------------
--- 4. polymorphism      --
+-- 3. encapsulation     --
 --------------------------
+
+These properties should be restricted for different types of Cycles
+
+* tire size
+* top speed
+* bottom speed (which may even be negative for some Cycles)
+* types of terrain Cycle can ride on
+
+--------------------------
+-- 4. abstraction       --
+--------------------------
+
+These functions can use lots of common code across different
+cycles.  Some can use the base function, but add some more
+function.
+
+* mount()
+* move()
+* stop() (force dismount if on a Cycle that can't go 0 speed)
+* dismount()
