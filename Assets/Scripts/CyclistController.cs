@@ -58,6 +58,22 @@ public class CyclistController : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKey(KeyCode.UpArrow)) {
+            if (cycleController != null) {
+                // Move cycle forward
+                cycleController.MoveForward();
+            }
+        }
+
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            if (cycleController != null)
+            {
+                // Move cycle backward
+                cycleController.MoveBackward();
+            }
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             Vector3 mousePosition = Input.mousePosition;
@@ -68,7 +84,7 @@ public class CyclistController : MonoBehaviour
                 if (target.CompareTag("Cycle"))
                 {
                     CycleController targetCycleController = target.GetComponent<CycleController>();
-                    if (targetCycleController.cycle.Mount(Rider))
+                    if (targetCycleController.Mount(Rider))
                     {
                         // Rider is allowed to get on cycle.  Put him there.
                         cycleController = targetCycleController;
@@ -98,7 +114,7 @@ public class CyclistController : MonoBehaviour
                         if (parentObject != null && parentObject.CompareTag("Cycle"))
                         {
                             // Already on cycle.  Can we ride it?
-                            if (!parentObject.GetComponent<CycleController>().cycle.CanBeRiddenBy(cyclistController.rider))
+                            if (!parentObject.GetComponent<CycleController>().CanBeRiddenBy(cyclistController.rider))
                             {
                                 // Nope, can't ride.
                                 Dismount(playClip: false);
@@ -122,9 +138,9 @@ public class CyclistController : MonoBehaviour
 
         void Dismount(bool playClip = true)
         {
-            if (cycleController != null && cycleController.cycle != null)
+            if (cycleController != null)
             {
-                cycleController.cycle.Dismount();
+                cycleController.Dismount();
                 cycleController = null; //No longer on a bike
                 transform.SetParent(initialParent);
                 transform.SetPositionAndRotation(initialPosition, initialRotation);
