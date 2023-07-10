@@ -40,6 +40,20 @@ public abstract class Cycle
 
     }
 
+    public virtual bool CanBeRiddenBy(Cyclist rider)
+    {
+
+        if (rider.RidingSkills.SkillLevel >= MinimumSkillLevel)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+
     public virtual void Dismount()
     {
 

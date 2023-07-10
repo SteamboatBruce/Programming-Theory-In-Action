@@ -12,6 +12,11 @@ public class CyclistController : MonoBehaviour
     GameObject selectedCycle; //bwd set this dynamically based on mouse click
     public RidingSkills.SKILLLEVEL skillLevel = RidingSkills.SKILLLEVEL.BEGINNER;
 
+    public AudioClip changeSkillClip;
+    public AudioClip mountClip;
+    public AudioClip dismountClip;
+    public AudioClip skillMismatchClip;
+
     //public RidingSkills.SKILLLEVEL SkillLevel
     //{
     //    get
@@ -34,12 +39,16 @@ public class CyclistController : MonoBehaviour
     Quaternion initialRotation;
     Transform initialParent;
 
+    AudioSource audioSource;
+
     private void Awake()
     {
         m_Camera = Camera.main;
         initialPosition = transform.position;
         initialRotation = transform.rotation;
         initialParent = transform;
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void Start()
@@ -58,26 +67,46 @@ public class CyclistController : MonoBehaviour
                 GameObject target = hit.collider.gameObject;
                 if (target.CompareTag("Cycle"))
                 {
-                    cycleController = target.GetComponent<CycleController>();
-                    if (cycleController.cycle.Mount(Rider))
+                    CycleController targetCycleController = target.GetComponent<CycleController>();
+                    if (targetCycleController.cycle.Mount(Rider))
                     {
                         // Rider is allowed to get on cycle.  Put him there.
+                        cycleController = targetCycleController;
                         selectedCycle = target;
                         GetOnSelectedCycle();
                     }
                     else
                     {
                         // Not allowed on Cycle.
-                        //bwd show an error message.
-                        GetComponent<AudioSource>().Play();
+                        //bwd show an error message?
+                        audioSource.PlayOneShot(skillMismatchClip);
                         StartCoroutine(ShakeCyclist());
                     }
                 }
                 else if (target.CompareTag("Rider"))
                 {
-                    CyclistController controller = target.GetComponent<CyclistController>();
+                    CyclistController cyclistController = target.GetComponent<CyclistController>();
+
                     // Change skill level;
-                    controller.Rider.RidingSkills.SkillLevel = controller.Rider.RidingSkills.GetNextSkillLevel();
+                    cyclistController.Rider.RidingSkills.SkillLevel = cyclistController.Rider.RidingSkills.GetNextSkillLevel();
+                    audioSource.PlayOneShot(changeSkillClip);
+
+                    // If currently on a bike, kick off if no longer has approriate skill;
+                    if (cyclistController.gameObject.transform.parent != null)
+                    {
+                        GameObject parentObject = cyclistController.gameObject.transform.parent.gameObject;
+                        if (parentObject != null && parentObject.CompareTag("Cycle"))
+                        {
+                            // Already on cycle.  Can we ride it?
+                            if (!parentObject.GetComponent<CycleController>().cycle.CanBeRiddenBy(cyclistController.rider))
+                            {
+                                // Nope, can't ride.
+                                Dismount(playClip: false);
+                                audioSource.PlayOneShot(skillMismatchClip);
+                                StartCoroutine(ShakeCyclist());
+                            }
+                        }
+                    }
                 }
                 else
                 {
@@ -91,11 +120,19 @@ public class CyclistController : MonoBehaviour
             }
         }
 
-        void Dismount()
+        void Dismount(bool playClip = true)
         {
-            cycleController.cycle.Dismount();
-            transform.SetParent(initialParent);
-            transform.SetPositionAndRotation(initialPosition, initialRotation);
+            if (cycleController != null && cycleController.cycle != null)
+            {
+                cycleController.cycle.Dismount();
+                cycleController = null; //No longer on a bike
+                transform.SetParent(initialParent);
+                transform.SetPositionAndRotation(initialPosition, initialRotation);
+                if (playClip)
+                {
+                    audioSource.PlayOneShot(dismountClip);
+                }
+            }
 
         }
 
@@ -105,6 +142,7 @@ public class CyclistController : MonoBehaviour
             transform.SetParent(selectedCycle.transform);
             transform.localPosition = seat.transform.localPosition;
             transform.rotation = Quaternion.LookRotation(new Vector3(0, 0, 1), Vector3.forward);
+            audioSource.PlayOneShot(mountClip);
         }
 
         IEnumerator ShakeCyclist()
