@@ -1,18 +1,23 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tricycle : Cycle
+public class TricycleController : CycleController
 {
+    TricycleController()
+    {
+        cycle = new Tricycle();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

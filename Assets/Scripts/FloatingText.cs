@@ -10,12 +10,13 @@ public class FloatingText : MonoBehaviour
     Transform worldSpaceCanvas;
     public Vector3 offset;
     TMP_Text tmp;
-    Cyclist cyclist;
+    CyclistController cyclist;
+    
 
     // Start is called before the first frame update
     void Start()
     {
-        cyclist = transform.parent.gameObject.GetComponent<Cyclist>();
+        cyclist = transform.parent.gameObject.GetComponent<CyclistController>();
 
         tmp = GetComponent<TMP_Text>();
         
@@ -39,7 +40,7 @@ public class FloatingText : MonoBehaviour
     {
         if (cyclist != null)
         {
-            tmp.text = "Skill Level: " + cyclist.SkillLevelText;
+            tmp.text = "Skill Level: " + cyclist.Rider.RidingSkills.SkillLevelText;
         }
         else
         {
