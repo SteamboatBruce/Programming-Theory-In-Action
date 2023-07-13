@@ -7,13 +7,14 @@ public class BicycleController : CycleController
     public AudioClip disallowedClip;
 
     BicycleController()
+        :base()
     {
-        cycle = new Bicycle();
+        cycle = new Bicycle();      
     }
 
-    public float speed = 0.01f;
+    
     public override void MoveForward() {
-        transform.Translate(new Vector3(0, 0, speed));
+        transform.Translate(new Vector3(0, 0, cycle.Speed));
     }
     public override void MoveBackward()
     {

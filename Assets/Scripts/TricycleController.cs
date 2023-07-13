@@ -5,18 +5,18 @@ using UnityEngine;
 public class TricycleController : CycleController
 {
     TricycleController()
+        :base()
     {
         cycle = new Tricycle();
     }
-
-    public float speed = 0.005f;
+ 
     public override void MoveForward()
     {
-        transform.Translate(new Vector3(0, 0, speed));
+        transform.Translate(new Vector3(0, 0, cycle.Speed));
     }
     public override void MoveBackward()
     {
-        transform.Translate(new Vector3(0, 0, -speed));
+        transform.Translate(new Vector3(0, 0, -cycle.Speed));
     }
 
     // Start is called before the first frame update

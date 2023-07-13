@@ -19,13 +19,24 @@ public abstract class Cycle
         }
     }
 
+    float _cycleSpeed = 1;
+    float maxSpeed = 10;
+    public float Speed
+    {
+        get { return _cycleSpeed; }
+        set
+        {
+            _cycleSpeed = Mathf.Min(maxSpeed, value);
+        }
+    }
+
     /// <summary>
     /// Attempts to put the 'rider' on the bike.
     /// </summary>
     /// <param name="rider"></param>
     /// <returns>true if rider can mount the bikes, false if not</returns>
     public virtual bool Mount(Cyclist rider)
-    { 
+    {
 
         if (rider.RidingSkills.SkillLevel >= MinimumSkillLevel)
         {

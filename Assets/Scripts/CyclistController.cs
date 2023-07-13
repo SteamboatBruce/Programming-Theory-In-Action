@@ -86,6 +86,8 @@ public class CyclistController : MonoBehaviour
                     CycleController targetCycleController = target.GetComponent<CycleController>();
                     if (targetCycleController.Mount(Rider))
                     {
+
+                        Dismount(false);
                         // Rider is allowed to get on cycle.  Put him there.
                         cycleController = targetCycleController;
                         selectedCycle = target;

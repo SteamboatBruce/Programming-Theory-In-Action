@@ -9,9 +9,15 @@ public abstract class CycleController : MonoBehaviour
 
     Vector3 initialPosition;
 
+
+    [SerializeField]
+    private float speed = .001f;
+
+
     private void Awake()
     {
         initialPosition = transform.position;
+        cycle.Speed = speed;
     }
 
     public void ResetPosition()
