@@ -17,19 +17,6 @@ public class CyclistController : MonoBehaviour
     public AudioClip dismountClip;
     public AudioClip skillMismatchClip;
 
-    //public RidingSkills.SKILLLEVEL SkillLevel
-    //{
-    //    get
-    //    {
-    //        return skillLevel;
-    //    }
-    //    set
-    //    {
-    //        skillLevel = value;
-    //        Rider.RidingSkills.SkillLevel = skillLevel;
-    //    }
-    //}
-
     public Cyclist rider = new Cyclist();
     public Cyclist Rider { get { return rider; } }
 

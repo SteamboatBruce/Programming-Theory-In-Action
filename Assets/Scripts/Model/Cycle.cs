@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+// ABSTRACTION
 public abstract class Cycle
 {
     Cyclist _rider;
@@ -9,6 +11,7 @@ public abstract class Cycle
     RidingSkills.SKILLLEVEL _minimumSkillLevel;
     public RidingSkills.SKILLLEVEL MinimumSkillLevel
     {
+        // ENCAPSULATION
         get
         {
             return _minimumSkillLevel;
@@ -23,6 +26,7 @@ public abstract class Cycle
     float maxSpeed = 10;
     public float Speed
     {
+        // ENCAPSULATION
         get { return _cycleSpeed; }
         set
         {

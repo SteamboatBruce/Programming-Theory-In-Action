@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// ABSTRACTION
 public abstract class CycleController : MonoBehaviour
 {
     public GameObject seat;
@@ -27,13 +28,13 @@ public abstract class CycleController : MonoBehaviour
 
     public virtual void MoveForward()
     {
-        // By default, do nothing.  Override for other behavious
+        // By default, do nothing.  Override for other behaviour
 
     }
 
     public virtual void MoveBackward()
     {
-        // By default, do nothing.  Override for other behavious
+        // By default, do nothing.  Override for other behaviour
 
     }
 
