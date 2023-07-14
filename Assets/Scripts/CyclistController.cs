@@ -9,26 +9,13 @@ public class CyclistController : MonoBehaviour
     GameObject seat;
     Camera m_Camera;
 
-    GameObject selectedCycle; //bwd set this dynamically based on mouse click
+    GameObject selectedCycle; // set this dynamically based on mouse click
     public RidingSkills.SKILLLEVEL skillLevel = RidingSkills.SKILLLEVEL.BEGINNER;
 
     public AudioClip changeSkillClip;
     public AudioClip mountClip;
     public AudioClip dismountClip;
     public AudioClip skillMismatchClip;
-
-    //public RidingSkills.SKILLLEVEL SkillLevel
-    //{
-    //    get
-    //    {
-    //        return skillLevel;
-    //    }
-    //    set
-    //    {
-    //        skillLevel = value;
-    //        Rider.RidingSkills.SkillLevel = skillLevel;
-    //    }
-    //}
 
     public Cyclist rider = new Cyclist();
     public Cyclist Rider { get { return rider; } }
@@ -96,7 +83,7 @@ public class CyclistController : MonoBehaviour
                     else
                     {
                         // Not allowed on Cycle.
-                        //bwd show an error message?
+                        // Show an error message?
                         audioSource.PlayOneShot(skillMismatchClip);
                         StartCoroutine(ShakeCyclist());
                     }
